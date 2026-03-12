@@ -26,3 +26,13 @@ nav .navicon {
     font-size: 1.2em;
     margin: 0 5px;
 }
+
+@media (max-width: 480px) {
+    nav a {
+        padding: 0 10px;
+        font-size: 0.85em;
+    }
+    nav .navicon {
+        font-size: 1em;
+    }
+}

@@ -1,9 +1,11 @@
 import "../styles/pages/orders.css";
 import { useState, useEffect } from "react";
+import { FaClipboardList, FaClock, FaCheckCircle, FaCalendar } from "react-icons/fa";
 
 const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [toast, setToast] = useState(null);
+    const fmt = (price) => price.toFixed(2).replace(".", ",") + " zł";
 
     useEffect(() => {
         const loadOrders = () => {
@@ -66,7 +68,7 @@ const Orders = () => {
 
             {orders.length === 0 ? (
                 <div className="orders-empty">
-                    <span>📋</span>
+                    <span><FaClipboardList /></span>
                     <p>Nie masz jeszcze żadnych zamówień</p>
                 </div>
             ) : (
@@ -79,20 +81,20 @@ const Orders = () => {
                             </div>
                             <div className="order-card-body">
                                 <div className="order-meta">
-                                    <span>📅 {order.date}</span>
-                                    <span>⏰ Odbiór: {order.pickupTime}</span>
+                                    <span><FaCalendar style={{ marginRight: "6px" }}/> {order.date}</span>
+                                    <span><FaClock style={{ marginRight: "6px" }}/> Odbiór: {order.pickupTime}</span>
                                 </div>
                                 <ul className="order-items">
                                     {order.items.map((item) => (
                                         <li key={item.id}>
                                             <span>{item.name}</span>
                                             <span className="order-item-qty">×{item.quantity}</span>
-                                            <span className="order-item-price">{item.price * item.quantity} zł</span>
+                                            <span className="order-item-price">{fmt(item.price * item.quantity)}</span>
                                         </li>
                                     ))}
                                 </ul>
                                 <div className="order-total">
-                                    Suma: <strong>{order.total} zł</strong>
+                                    Suma: <strong>{fmt(order.total)}</strong>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +104,7 @@ const Orders = () => {
 
             {toast && (
                 <div className="toast">
-                    ✅ {toast}
+                    <FaCheckCircle style={{ marginRight: "6px" }}/> {toast}
                 </div>
             )}
         </div>

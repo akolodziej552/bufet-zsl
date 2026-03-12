@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
+import { FaClipboardList, FaTrash, FaClock, FaSync, FaCheckCircle } from "react-icons/fa";
 
 const AdminPanel = () => {
     const { user } = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
+    const fmt = (price) => price.toFixed(2).replace(".", ",") + " zł";
 
     useEffect(() => {
         const loadOrders = () => {
@@ -56,7 +58,7 @@ const AdminPanel = () => {
             <div className="admin-header">
                 <h1>Panel Admina</h1>
                 <button className="btn-danger" onClick={clearOrders}>
-                    🗑 Wyczyść historię
+                    <FaTrash style={{ marginRight: "6px" }}/> Wyczyść historię
                 </button>
             </div>
 
@@ -81,7 +83,7 @@ const AdminPanel = () => {
 
             {orders.length === 0 ? (
                 <div className="admin-empty">
-                    <span>📋</span>
+                    <span><FaClipboardList /></span>
                     <p>Brak zamówień</p>
                 </div>
             ) : (
@@ -91,7 +93,7 @@ const AdminPanel = () => {
                             <div className="admin-order-header">
                                 <span className="order-number">{order.number}</span>
                                 <span className={getStatusClass(order.status)}>{order.status}</span>
-                                <span className="order-time">⏰ {order.pickupTime}</span>
+                                <span className="order-time"><FaClock style={{ marginRight: "6px" }}/> {order.pickupTime}</span>
                             </div>
                             <div className="admin-order-body">
                                 <ul className="order-items">
@@ -103,21 +105,21 @@ const AdminPanel = () => {
                                     ))}
                                 </ul>
                                 <div className="admin-order-footer">
-                                    <strong className="order-total">{order.total} zł</strong>
+                                    <strong className="order-total">{fmt(order.total)}</strong>
                                     <div className="admin-actions">
                                         <button
                                             className="btn-action btn--progress"
                                             onClick={() => updateStatus(index, "W trakcie przygotowania")}
                                             disabled={order.status === "W trakcie przygotowania" || order.status === "Gotowe do odbioru"}
                                         >
-                                            🔄 W trakcie
+                                            <FaSync style={{ marginRight: "6px" }}/> W trakcie
                                         </button>
                                         <button
                                             className="btn-action btn--ready"
                                             onClick={() => updateStatus(index, "Gotowe do odbioru")}
                                             disabled={order.status === "Gotowe do odbioru"}
                                         >
-                                            ✅ Gotowe
+                                            <FaCheckCircle style={{ marginRight: "6px" }}/> Gotowe
                                         </button>
                                     </div>
                                 </div>

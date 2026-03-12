@@ -17,3 +17,12 @@ main p {
     font-size: 1.1em;
     color: #555;
 }
+
+@media (max-width: 480px) {
+    main {
+        padding: 30px 20px;
+    }
+    main h1 {
+        font-size: 1.5em;
+    }
+}

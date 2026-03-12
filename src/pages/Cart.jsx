@@ -2,12 +2,14 @@ import "../styles/pages/cart.css";
 import { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import { FaShoppingCart, FaClock, FaCheckCircle } from "react-icons/fa";
 
 const Cart = () => {
     const { cart, addToCart, removeFromCart, clearCart, totalPrice } = useContext(CartContext);
     const [pickupTime, setPickupTime] = useState("");
     const [ordered, setOrdered] = useState(false);
     const navigate = useNavigate();
+    const fmt = (price) => price.toFixed(2).replace(".", ",") + " zł";
 
     const generateOrderNumber = () => {
         let counter = localStorage.getItem("orderCounter");
@@ -50,7 +52,7 @@ const Cart = () => {
         return (
             <div className="cart-page">
                 <div className="cart-success">
-                    <span>✅</span>
+                    <span><FaCheckCircle style={{ marginRight: "6px" }}/></span>
                     <h2>Zamówienie złożone!</h2>
                     <p>Przekierowanie do historii zamówień...</p>
                 </div>
@@ -63,7 +65,7 @@ const Cart = () => {
             <h1 className="cart-title">Koszyk</h1>
             {cart.length === 0 ? (
                 <div className="cart-empty-state">
-                    <span>🛒</span>
+                    <span><FaShoppingCart /></span>
                     <p>Koszyk jest pusty</p>
                     <button className="btn-primary" onClick={() => navigate("/menu")}>Przejdź do menu
                     </button>
@@ -84,7 +86,7 @@ const Cart = () => {
                                 {cart.map((item) => (
                                     <tr key={item.id}>
                                         <td>{item.name}</td>
-                                        <td>{item.price} zł</td>
+                                        <td>{fmt(item.price)}</td>
                                         <td>
                                             <div className="qty-controls">
                                                 <button onClick={() => removeFromCart(item.id)}>
@@ -99,7 +101,7 @@ const Cart = () => {
                                             </div>
                                         </td>
                                         <td>
-                                            {item.price * item.quantity} zł
+                                            {fmt(item.price * item.quantity)}
                                         </td>
                                     </tr>
                                 ))}
@@ -113,15 +115,15 @@ const Cart = () => {
                         <h2>Podsumowanie</h2>
                         <div className="summary-row">
                             <span>Produkty ({cart.reduce((s,i) => s+i.quantity, 0)}):</span>
-                            <strong>{totalPrice} zł</strong>
+                            <strong>{fmt(totalPrice)}</strong>
                         </div>
                         <div className="summary-row summary-total">
                             <span>Do zapłaty:</span>
-                            <strong>{totalPrice} zł</strong>
+                            <strong>{fmt(totalPrice)}</strong>
                         </div>
                         <div className="pickup-section">
                             <label htmlFor="pickup">
-                                ⏰ Godzina odbioru:
+                                <FaClock style={{ marginRight: "6px" }}/> Godzina odbioru:
                             </label>
                             <input id="pickup" type="time" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)}/>
                         </div>

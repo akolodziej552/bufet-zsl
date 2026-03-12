@@ -1,6 +1,7 @@
 import "../styles/pages/menu.css";
 import { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { FaShoppingCart, FaClock, FaCheckCircle } from "react-icons/fa";
 
 const products = [
     {id: 1, name: "Hot Dog z dodatkami", price: 7, emoji: "🌭"},
@@ -30,6 +31,7 @@ const Menu = () => {
     const { cart, addToCart, removeFromCart, clearCart, totalPrice } = useContext(CartContext);
     const [pickupTime, setPickupTime] = useState("");
     const [ordered, setOrdered] = useState(false);
+    const fmt = (price) => price.toFixed(2).replace(".", ",") + " zł";
 
     const generateOrderNumber = () => {
         let counter = localStorage.getItem("orderCounter");
@@ -81,8 +83,6 @@ const Menu = () => {
     return (
         <div className="menu-page">
             <div className="menu-layout">
-
-                {/* PRODUKTY */}
                 <section className="menu-products">
                     <h1 className="menu-title">Menu</h1>
                     <div className="products-grid">
@@ -93,7 +93,7 @@ const Menu = () => {
                                     <span className="product-emoji">{product.emoji}</span>
                                     <div className="product-info">
                                         <span className="product-name">{product.name}</span>
-                                        <span className="product-price">{product.price} zł</span>
+                                        <span className="product-price">{fmt(product.price)}</span>
                                     </div>
                                     <div className="product-controls">
                                         {qty > 0 ? (
@@ -111,10 +111,8 @@ const Menu = () => {
                         })}
                     </div>
                 </section>
-
-                {/* KOSZYK */}
                 <aside className="cart-panel">
-                    <h2 className="cart-title">🛒 Koszyk</h2>
+                    <h2 className="cart-title"><FaShoppingCart style={{ marginRight: "6px" }}/> Koszyk</h2>
 
                     {cart.length === 0 ? (
                         <p className="cart-empty">Koszyk jest pusty</p>
@@ -129,18 +127,18 @@ const Menu = () => {
                                             <span className="qty-count">{item.quantity}</span>
                                             <button className="qty-btn small" onClick={() => addToCart(item)}>+</button>
                                         </div>
-                                        <span className="cart-item-price">{item.price * item.quantity} zł</span>
+                                        <span className="cart-item-price">{fmt(item.price * item.quantity)}</span>
                                     </li>
                                 ))}
                             </ul>
 
                             <div className="cart-total">
                                 <span>Suma:</span>
-                                <strong>{totalPrice} zł</strong>
+                                <strong>{fmt(totalPrice)}</strong>
                             </div>
 
                             <div className="cart-pickup">
-                                <label htmlFor="pickup-time">⏰ Godzina odbioru:</label>
+                                <label htmlFor="pickup-time"><FaClock style={{ marginRight: "6px" }}/> Godzina odbioru:</label>
                                 <input
                                     id="pickup-time"
                                     type="time"
@@ -160,7 +158,7 @@ const Menu = () => {
 
                     {ordered && (
                         <div className="order-success">
-                            ✅ Zamówienie złożone!
+                            <FaCheckCircle style={{ marginRight: "6px" }}/> Zamówienie złożone!
                         </div>
                     )}
                 </aside>

@@ -20,6 +20,26 @@ header .telnum {
     align-items: center;
     gap: 6px;
     cursor: pointer;
+    white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+    header {
+        height: 64px;
+    }
+    header img {
+        height: 46px;
+    }
+    header .telnum {
+        font-size: 0.95em;
+    }
+    header a {
+        font-size: 1.4em;
+        padding: 4px;
+    }
+    .account-icon {
+        font-size: 1.4em;
+    }
 }
 
 header .shopacc {

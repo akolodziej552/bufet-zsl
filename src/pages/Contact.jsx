@@ -13,13 +13,7 @@ const Contact = () => {
                 </address>
                 <div className="openinghours">
                     <h2>Godziny otwarcia:</h2>
-                    <ul>
-                        <li>placeholder</li>
-                        <li>placeholder</li>
-                        <li>placeholder</li>
-                        <li>placeholder</li>
-                        <li>placeholder</li>
-                    </ul>
+                    <p>Pon. - Pt.: 8:00 - 15:30</p>
                 </div>
             </div>
         </div>
