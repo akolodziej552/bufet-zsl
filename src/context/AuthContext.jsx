@@ -9,13 +9,6 @@ const ADMIN = {
     role: "admin"
 };
 
-const USER = {
-    id: "user",
-    email: "user@user.com",
-    password: "12345",
-    role: "user"
-}
-
 export function AuthProvider({children}) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -25,10 +18,6 @@ export function AuthProvider({children}) {
         const adminExists = users.find((u) => u.role === "admin");
         if (!adminExists) {
             localStorage.setItem("users", JSON.stringify([...users, ADMIN]));
-        }
-        const demoUserExists = users.find((u) => u.id === "user");
-        if (!demoUserExists) {
-            localStorage.setItem("users", JSON.stringify([...users, USER]));
         }
         const savedUser = JSON.parse(localStorage.getItem("currentUser")) || JSON.parse(sessionStorage.getItem("currentUser"));
         if (savedUser) {
